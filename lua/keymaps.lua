@@ -41,3 +41,11 @@ vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
 -- Fugitive --
 --------------
 vim.keymap.set('n', '<leader>g', vim.cmd.Git)
+
+----------------
+-- Good Stuff --
+----------------
+vim.api.nvim_create_user_command("W", function()
+    vim.cmd("w")
+    vim.notify('Good Boy!')
+end, {})
