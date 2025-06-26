@@ -19,6 +19,11 @@ return
       formatting = {
         format = lspkind.cmp_format({ mode = 'symbol_text', maxwidth = 50 }),
       },
+      window = {
+          completion = cmp.config.window.bordered({ border = "rounded" }),
+          documentation = cmp.config.window.bordered({ border = "rounded" }),
+
+      },
       snippet = {
         expand = function(args)
           require('luasnip').lsp_expand(args.body)
