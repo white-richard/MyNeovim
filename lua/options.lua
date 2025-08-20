@@ -14,7 +14,7 @@ vim.opt.hlsearch = false
 
 -- UI and Numbering
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 
 -- If We Want Mode's Shown (We're advanced so no)

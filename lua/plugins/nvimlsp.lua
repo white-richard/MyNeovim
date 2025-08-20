@@ -116,7 +116,8 @@ return {
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      require('lspconfig').gdscript.setup(capabilities)
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -130,6 +131,26 @@ return {
       local servers = {
         bashls = {},
         marksman = {},
+        omnisharp = {
+            cmd = { "dotnet", vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.dll" },
+            settings = {
+                FormattingOptions = {
+                    EnableEditorConfigSupport = false,
+                    OrganizeImports = true,
+                },
+                Sdk = {
+                    IncludePrereleases = true,
+                },
+                RoslynExtensionsOptions = {
+                    EnableImportCompletion = false, -- Disable for performance
+                    UseModernNet = false, -- Critical for Unity’s Mono
+                },
+            },
+            root_dir = require('lspconfig').util.root_pattern("*.csproj", "*.sln"),
+            on_attach = function(client, bufnr)
+                vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+            end,
+        },
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -175,8 +196,12 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+        'omnisharp',
+    })
+    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+    require("lspconfig").emmet_ls.setup({
+        filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+    })
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
