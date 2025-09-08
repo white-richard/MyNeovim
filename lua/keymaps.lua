@@ -46,10 +46,15 @@ vim.keymap.set('n', '<leader>g', vim.cmd.Git, {desc = "Git Menu"})
 -- Twilight --
 --------------
 vim.keymap.set('n', '<leader>tt', vim.cmd.Twilight, {desc="Toggle Twilight Mode"})
-
+ 
 -------------
 -- Comment --
 -------------
+
+----------------
+--  Buffers   --
+----------------
+
 
 ----------------
 -- Good Stuff --
@@ -58,6 +63,8 @@ vim.api.nvim_create_user_command("W", function()
     vim.cmd("w")
     vim.notify('Good Boy!')
 end, {})
+
+
 
 vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
