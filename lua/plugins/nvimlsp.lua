@@ -133,6 +133,29 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        -- Python: Pyright (types/IDE smarts)
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                diagnosticMode = "workspace",  -- "openFilesOnly" if you prefer
+                typeCheckingMode = "basic",    -- try "strict" later
+                autoImportCompletions = true,
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+        },
+
+        -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
+        ruff_lsp = {
+          on_attach = function(client, bufnr)
+            -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
+            client.server_capabilities.hoverProvider = false
+          end,
+        },
+
         bashls = {},
         marksman = {},
         omnisharp = {
@@ -201,6 +224,8 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'omnisharp',
+        'pyright',
+        'ruff-lsp',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     --require("lspconfig").emmet_ls.setup({
