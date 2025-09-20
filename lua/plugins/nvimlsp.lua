@@ -149,7 +149,7 @@ return {
         },
 
         -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
-        ruff_lsp = {
+        ruff = {
           on_attach = function(client, bufnr)
             -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
             client.server_capabilities.hoverProvider = false
@@ -225,7 +225,7 @@ return {
         'stylua', -- Used to format Lua code
         'omnisharp',
         'pyright',
-        'ruff-lsp',
+        'ruff',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     --require("lspconfig").emmet_ls.setup({
