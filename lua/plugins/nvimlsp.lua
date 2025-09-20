@@ -117,7 +117,11 @@ return {
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-      require('lspconfig').gdscript.setup(capabilities)
+      --require('lspconfig').gdscript.setup(capabilities)
+      --new api for nvim > 0.11
+      vim.lsp.config('gdscript', { capabilities = capabilities })
+      vim.lsp.enable('gdscript')
+    
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -199,9 +203,14 @@ return {
         'omnisharp',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-    require("lspconfig").emmet_ls.setup({
+    --require("lspconfig").emmet_ls.setup({
+    --    filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+    --})
+    vim.lsp.config('emmet_ls', {
         filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
     })
+    vim.lsp.enable('emmet_ls')
+
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
@@ -213,7 +222,9 @@ return {
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            --require('lspconfig')[server_name].setup(server)
+            vim.lsp.config(server_name, server)
+            vim.lsp.enable(server_name)
           end,
         },
       }
