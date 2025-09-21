@@ -31,3 +31,4 @@ end
 vim.keymap.set('n', '<leader>y', copy_operator, {expr = true})
 vim.keymap.set('n', '<leader>Y', function() return copy_operator() .. '_' end, {expr = true})
 vim.keymap.set('v', '<leader>y', copy_visual)
+
