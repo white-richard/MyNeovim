@@ -151,6 +151,14 @@ return {
                 vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
             end,
         },
+        zls = {
+            cmd = {"zls"},
+            settings = {
+                zls = {
+                    zig_exe_path = "/home/apollo/.zvm/0.15.1/zig",
+                }
+            }
+        },
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
