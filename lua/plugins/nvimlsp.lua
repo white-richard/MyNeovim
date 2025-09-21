@@ -148,6 +148,15 @@ return {
           },
         },
 
+        zls = {
+            cmd = {"zls"},
+            settings = {
+                zls = {
+                    zig_exe_path = "/home/richw/.zvm/0.15.1/zig",
+                }
+            }
+        },
+
         -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
         ruff = {
           on_attach = function(client, bufnr)
