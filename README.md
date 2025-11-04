@@ -1,3 +1,3 @@
 # MyNeovim
 
-This is my NeoVim configuration
+This is my NeoVim configs
