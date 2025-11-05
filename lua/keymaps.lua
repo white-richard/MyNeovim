@@ -42,11 +42,6 @@ vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end, {desc = 
 --------------
 vim.keymap.set('n', '<leader>g', vim.cmd.Git, {desc = "Git Menu"})
 
---------------
--- Twilight --
---------------
-vim.keymap.set('n', '<leader>tt', vim.cmd.Twilight, {desc="Toggle Twilight Mode"})
- 
 -------------
 -- Comment --
 -------------
