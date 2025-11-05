@@ -13,8 +13,8 @@ return {
                 null_ls.builtins.formatting.black,
             },
         })
-            vim.keymap.set({ "n", "v" }, "<leader>wf", function()
-              vim.lsp.buf.format({ async = true })
-            end, { desc = "Format buffer or selection" })
+        vim.keymap.set({ "n", "v" }, "<leader>wf", function()
+            vim.lsp.buf.format({ async = true })
+        end, { desc = "Format buffer or selection" })
     end,
 }
