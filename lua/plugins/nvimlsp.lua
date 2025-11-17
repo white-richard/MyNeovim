@@ -159,6 +159,10 @@ return {
             zls = {},
             lua_ls = {},
             marksman = {},
+            tinymist = {},
+            bash_language_server = {},
+            lua_language_server = {},
+            stylua = {},
 
             omnisharp = {
                 cmd = { "dotnet", vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.dll" },
