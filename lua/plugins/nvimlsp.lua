@@ -125,7 +125,6 @@ return {
 
         -- Enable the following language servers
         --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-        --
         --  Add any additional override configuration in the following tables. Available keys are:
         --  - cmd (table): Override the default command used to start the server
         --  - filetypes (table): Override the default list of associated filetypes for the server
@@ -133,40 +132,34 @@ return {
         --  - settings (table): Override the default settings passed when initializing the server.
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
         local servers = {
-            -- -- Python: Pyright (types/IDE smarts)
-            -- pyright = {
-            --     settings = {
-            --         python = {
-            --             analysis = {
-            --                 diagnosticMode = "workspace",  -- "openFilesOnly" if you prefer
-            --                 typeCheckingMode = "basic",    -- try "strict" later
-            --                 autoImportCompletions = true,
-            --                 autoSearchPaths = true,
-            --                 useLibraryCodeForTypes = true,
-            --             },
-            --         },
-            --     },
-            -- },
 
-            -- zls = {
-            --     cmd = {"zls"},
-            --     settings = {
-            --         zls = {
-            --             zig_exe_path = "/home/richw/.zvm/0.15.1/zig",
-            --         }
-            --     }
-            -- },
+            pyright = {
+                settings = {
+                    python = {
+                        analysis = {
+                            diagnosticMode = "workspace",  -- "openFilesOnly" if you prefer
+                            typeCheckingMode = "basic",    -- try "strict" later
+                            autoImportCompletions = true,
+                            autoSearchPaths = true,
+                            useLibraryCodeForTypes = true,
+                        },
+                    },
+                },
+            },
 
-            -- -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
-            -- ruff = {
-            --     on_attach = function(client, bufnr)
-            --         -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
-            --         client.server_capabilities.hoverProvider = false
-            --     end,
-            -- },
+            -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
+            ruff = {
+                on_attach = function(client, bufnr)
+                    -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
+                    client.server_capabilities.hoverProvider = false
+                end,
+            },
 
             bashls = {},
+            zls = {},
+            lua_ls = {},
             marksman = {},
+
             omnisharp = {
                 cmd = { "dotnet", vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.dll" },
                 settings = {
@@ -187,33 +180,6 @@ return {
                     vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
                 end,
             },
-            -- clangd = {},
-            -- gopls = {},
-            -- pyright = {},
-            -- rust_analyzer = {},
-            -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-            --
-            -- Some languages (like typescript) have entire language plugins that can be useful:
-            --    https://github.com/pmizio/typescript-tools.nvim
-            --
-            -- But for many setups, the LSP (`ts_ls`) will work just fine
-            -- ts_ls = {},
-            --
-
-            lua_ls = {
-                -- cmd = { ... },
-                -- filetypes = { ... },
-                -- capabilities = {},
-                -- settings = {
-                --   Lua = {
-                --     completion = {
-                --       callSnippet = 'Replace',
-                --     },
-                --     -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                --     -- diagnostics = { disable = { 'missing-fields' } },
-                --   },
-                -- },
-            },
         }
 
         -- Ensure the servers and tools above are installed
@@ -233,13 +199,10 @@ return {
         vim.list_extend(ensure_installed, {
             'stylua', -- Used to format Lua code
             'omnisharp',
-            -- 'pyright',
-            -- 'ruff',
+            'pyright',
+            'ruff',
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-        --require("lspconfig").emmet_ls.setup({
-        --    filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
-        --})
         vim.lsp.config('emmet_ls', {
             filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
         })
@@ -248,7 +211,7 @@ return {
 
         require('mason-lspconfig').setup {
             ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-            automatic_installation = false,
+            automatic_installation = true,
             handlers = {
                 function(server_name)
                     local server = servers[server_name] or {}
@@ -256,7 +219,6 @@ return {
                     -- by the server configuration above. Useful when disabling
                     -- certain features of an LSP (for example, turning off formatting for ts_ls)
                     server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                    --require('lspconfig')[server_name].setup(server)
                     vim.lsp.config(server_name, server)
                     vim.lsp.enable(server_name)
                 end,
