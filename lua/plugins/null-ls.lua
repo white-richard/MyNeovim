@@ -8,9 +8,14 @@ return {
     config = function()
         require("mason").setup()
 
+        vim.keymap.set("n", "<leader>wf", function()
+            vim.lsp.buf.format({ async = true })
+        end, { desc = "Format buffer" })
+
+
         -- Will auto-install Ruff if it's listed in your none-ls sources
         require("mason-null-ls").setup({
-            ensure_installed = { "ruff" }, -- THIS installs the Ruff binary
+            ensure_installed = { "ruff", "typstyle" }, -- THIS installs the Ruff binary
             automatic_installation = true,
         })
 
@@ -23,6 +28,7 @@ return {
                 null_ls.builtins.diagnostics.eslint_d,
 
                 null_ls.builtins.formatting.black,
+                null_ls.builtins.formatting.typstyle,
             },
         })
     end,
