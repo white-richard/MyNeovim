@@ -43,7 +43,7 @@ return {
         vim.opt.linebreak = true        -- Break at word boundaries
         vim.opt.breakindent = true      -- Indent wrapped lines
         vim.opt.showbreak = "↳ "        -- Visual indicator for wrapped lines
-        vim.opt.colorcolumn = "80"
+        -- vim.opt.colorcolumn = "80"
 
         --- Put your configuration here
         ---@type Neominimap.UserConfig
