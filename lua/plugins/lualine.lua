@@ -4,7 +4,7 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        theme = "rose-pine", -- or "tokyonight", "dracula", "catppuccin", "auto"
+        theme = "kanagawa", -- or "tokyonight", "dracula", "catppuccin", "auto", "kanagawa"
       },
     })
   end,
