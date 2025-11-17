@@ -133,37 +133,37 @@ return {
         --  - settings (table): Override the default settings passed when initializing the server.
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
         local servers = {
-            -- Python: Pyright (types/IDE smarts)
-            pyright = {
-                settings = {
-                    python = {
-                        analysis = {
-                            diagnosticMode = "workspace",  -- "openFilesOnly" if you prefer
-                            typeCheckingMode = "basic",    -- try "strict" later
-                            autoImportCompletions = true,
-                            autoSearchPaths = true,
-                            useLibraryCodeForTypes = true,
-                        },
-                    },
-                },
-            },
+            -- -- Python: Pyright (types/IDE smarts)
+            -- pyright = {
+            --     settings = {
+            --         python = {
+            --             analysis = {
+            --                 diagnosticMode = "workspace",  -- "openFilesOnly" if you prefer
+            --                 typeCheckingMode = "basic",    -- try "strict" later
+            --                 autoImportCompletions = true,
+            --                 autoSearchPaths = true,
+            --                 useLibraryCodeForTypes = true,
+            --             },
+            --         },
+            --     },
+            -- },
 
-            zls = {
-                cmd = {"zls"},
-                settings = {
-                    zls = {
-                        zig_exe_path = "/home/richw/.zvm/0.15.1/zig",
-                    }
-                }
-            },
+            -- zls = {
+            --     cmd = {"zls"},
+            --     settings = {
+            --         zls = {
+            --             zig_exe_path = "/home/richw/.zvm/0.15.1/zig",
+            --         }
+            --     }
+            -- },
 
-            -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
-            ruff = {
-                on_attach = function(client, bufnr)
-                    -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
-                    client.server_capabilities.hoverProvider = false
-                end,
-            },
+            -- -- Python: Ruff LSP (lint + quick fixes: organize imports, fix-all)
+            -- ruff = {
+            --     on_attach = function(client, bufnr)
+            --         -- Keep Ruff focused on diagnostics/code actions (let Pyright handle hovers)
+            --         client.server_capabilities.hoverProvider = false
+            --     end,
+            -- },
 
             bashls = {},
             marksman = {},
@@ -186,14 +186,6 @@ return {
                 on_attach = function(client, bufnr)
                     vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
                 end,
-            },
-            zls = {
-                cmd = {"zls"},
-                settings = {
-                    zls = {
-                        zig_exe_path = "/home/apollo/.zvm/0.15.1/zig",
-                    }
-                }
             },
             -- clangd = {},
             -- gopls = {},
@@ -241,8 +233,8 @@ return {
         vim.list_extend(ensure_installed, {
             'stylua', -- Used to format Lua code
             'omnisharp',
-            'pyright',
-            'ruff',
+            -- 'pyright',
+            -- 'ruff',
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
         --require("lspconfig").emmet_ls.setup({
