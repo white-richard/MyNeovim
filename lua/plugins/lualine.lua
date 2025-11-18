@@ -4,7 +4,7 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        theme = "kanagawa", -- or "tokyonight", "dracula", "catppuccin", "auto", "kanagawa"
+        theme = "vscode", -- or "tokyonight", "dracula", "catppuccin", "auto", "kanagawa"
       },
     })
   end,
