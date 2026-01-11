@@ -27,7 +27,8 @@ return {
       colored = false,
       update_in_insert = false,
       always_visible = false,
-      cond = hide_in_width,aa
+      cond = hide_in_width,
+      aa,
     }
 
     local diff = {
