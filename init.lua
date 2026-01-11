@@ -1,36 +1,36 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+require 'core.keymaps' -- Load general keymaps
 
-require('config.lazy')
-require('options')
-require('colorscheme')
-require('lsp')
-require('keymaps')
+require 'core.options' -- Load general options
+-- require 'core.snippets' -- Custom code snippets
 
-
--- Enable persistent undo
-vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.local/share/nvim/undo"
-
--- Allows clipboard through ssh using OSC52
--- MUST also adjust .tmux.conf for tmux copying.
--- set -g allow-passthrough on
--- set -g set-clipboard on
-require('osc52').setup({
-  max_length = 0, -- 0 = unlimited
-  silent = true,
-  trim = false,
-})
-
--- Yank to local clipboard with <leader>y
-local function copy_operator()
-  require('osc52').copy_operator()
+-- Set up the Lazy plugin manager
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then
+    error('Error cloning lazy.nvim:\n' .. out)
+  end
 end
-local function copy_visual()
-  require('osc52').copy_visual()
-end
+vim.opt.rtp:prepend(lazypath)
 
-vim.keymap.set('n', '<leader>y', copy_operator, {expr = true})
-vim.keymap.set('n', '<leader>Y', function() return copy_operator() .. '_' end, {expr = true})
-vim.keymap.set('v', '<leader>y', copy_visual)
+-- Set up plugins
+require('lazy').setup {
+require 'plugins.neotree',
+require 'plugins.colortheme',
+require 'plugins.bufferline',
+require 'plugins.lualine',
+--   require 'plugins.treesitter',
+--   require 'plugins.telescope',
+--   require 'plugins.lsp',
+--   require 'plugins.autocompletion',
+--   require 'plugins.none-ls',
+  require 'plugins.gitsigns',
+--   require 'plugins.alpha',
+--   require 'plugins.indent-blankline',
+--   require 'plugins.misc',
+--   require 'plugins.comment',
+}
 
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
