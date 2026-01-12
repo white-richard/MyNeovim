@@ -29,9 +29,7 @@ return {
       formatting.shfmt.with { args = { '-i', '4' } },
       formatting.terraform_fmt,
       require('none-ls.formatting.ruff').with { extra_args = { 'I', 'extend-select' } },
-      -- require('none-ls.formatting.ruff_format').with {
-      --   extra_args = {},
-      -- },
+      require 'none-ls.formatting.ruff_format',
     }
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
