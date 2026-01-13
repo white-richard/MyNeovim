@@ -32,6 +32,7 @@ require('lazy').setup {
   require 'plugins.toggleterm',
   require 'plugins.interestingwords',
   require 'plugins.minimap',
+  require 'plugins.image',
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
