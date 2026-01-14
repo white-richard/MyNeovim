@@ -4,19 +4,6 @@ return { -- Highlight, edit, and navigate code
   lazy = false,
   build = ':TSUpdate',
   config = function()
-    -- local function ensure_treesitter_cli()
-    --   if vim.fn.executable 'tree-sitter-cli' ~= 1 then
-    --     error(
-    --       '[nvim-treesitter] tree-sitter-cli not found.\n'
-    --         .. 'Install it with:\n'
-    --         .. '  npm install -g tree-sitter-cli\n'
-    --         .. 'or via your system package manager.'
-    --     )
-    --   end
-    -- end
-    --
-    -- ensure_treesitter_cli()
-
     local parsers = {
       'lua',
       'python',
@@ -49,18 +36,11 @@ return { -- Highlight, edit, and navigate code
     local ts = require 'nvim-treesitter'
 
     -- Optional: only needed if you want a custom install dir etc.
-    ts.setup {
-      -- install_dir = vim.fn.stdpath("data") .. "/site",
-    }
+    -- ts.setup {
+    --   -- install_dir = vim.fn.stdpath("data") .. "/site",
+    -- }
 
-    if type(ts.install) == 'function' then
-      ts.install(parsers) -- no-op if already installed
-    else
-      -- Fallback if you're not actually on main (or module got shadowed):
-      -- install API lives here in some layouts.
-      local inst = require 'nvim-treesitter.install'
-      inst.install(parsers)
-    end
+    ts.install(parsers) -- no-op if already installed
 
     -- Enable TS highlighting per filetype (Neovim builtin)
     vim.api.nvim_create_autocmd('FileType', {
