@@ -1,35 +1,69 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  branch = "main",
+  branch = 'main',
   lazy = false,
-  build = ":TSUpdate",
+  build = ':TSUpdate',
   config = function()
+    -- local function ensure_treesitter_cli()
+    --   if vim.fn.executable 'tree-sitter-cli' ~= 1 then
+    --     error(
+    --       '[nvim-treesitter] tree-sitter-cli not found.\n'
+    --         .. 'Install it with:\n'
+    --         .. '  npm install -g tree-sitter-cli\n'
+    --         .. 'or via your system package manager.'
+    --     )
+    --   end
+    -- end
+    --
+    -- ensure_treesitter_cli()
+
     local parsers = {
-      "lua", "python", "javascript", "typescript", "vimdoc", "vim", "regex",
-      "terraform", "sql", "dockerfile", "toml", "json", "java", "groovy", "go",
-      "gitignore", "graphql", "yaml", "make", "cmake", "markdown",
-      "markdown_inline", "bash", "tsx", "css", "html",
+      'lua',
+      'python',
+      'javascript',
+      'typescript',
+      'vimdoc',
+      'vim',
+      'regex',
+      'terraform',
+      'sql',
+      'dockerfile',
+      'toml',
+      'json',
+      'java',
+      'groovy',
+      'go',
+      'gitignore',
+      'graphql',
+      'yaml',
+      'make',
+      'cmake',
+      'markdown',
+      'markdown_inline',
+      'bash',
+      'tsx',
+      'css',
+      'html',
     }
 
-    local ts = require("nvim-treesitter")
+    local ts = require 'nvim-treesitter'
 
     -- Optional: only needed if you want a custom install dir etc.
-    ts.setup({
+    ts.setup {
       -- install_dir = vim.fn.stdpath("data") .. "/site",
-    })
+    }
 
-    if type(ts.install) == "function" then
+    if type(ts.install) == 'function' then
       ts.install(parsers) -- no-op if already installed
     else
       -- Fallback if you're not actually on main (or module got shadowed):
       -- install API lives here in some layouts.
-      local inst = require("nvim-treesitter.install")
+      local inst = require 'nvim-treesitter.install'
       inst.install(parsers)
     end
 
-
     -- Enable TS highlighting per filetype (Neovim builtin)
-    vim.api.nvim_create_autocmd("FileType", {
+    vim.api.nvim_create_autocmd('FileType', {
       pattern = parsers, -- or { "*" } if you want it everywhere
       callback = function(args)
         pcall(vim.treesitter.start, args.buf)
@@ -41,9 +75,7 @@ return { -- Highlight, edit, and navigate code
     vim.opt.foldenable = false
     -- vim.wo.foldmethod = "manual"
     -- vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
   end,
-
 
   -- LEGACY TREESITTER API --
 
