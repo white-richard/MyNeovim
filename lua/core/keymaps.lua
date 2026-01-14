@@ -1,3 +1,8 @@
+-- Delete without copying into the register
+vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
+vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
+
 -- Set leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
